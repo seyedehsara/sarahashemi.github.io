@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sara Hashemi - Data & AI Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --light: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 5% 4rem;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+            border: 3px solid rgba(99, 102, 241, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .hero-image img:hover {
+            transform: translateY(-10px);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--dark-light);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .company {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content ul {
+            color: var(--gray);
+            padding-left: 1.2rem;
+        }
+
+        .timeline-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: var(--dark-light);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .project-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .view-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .view-more p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .platform-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .platform-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--dark-light);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .platform-link:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--dark-light);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            color: var(--gray);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-category li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            color: var(--gray);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            background: var(--dark-light);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--dark-light);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark-light);
+            color: var(--gray);
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image img {
+                max-width: 300px;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                font-size: 0.9rem;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 2rem !important;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Sara Hashemi</h1>
+                <p class="subtitle">Data Engineer & AI Engineer</p>
+                <p>Building intelligent data pipelines and AI solutions with a solid foundation in software engineering. Specialized in Python, cloud platforms, GenAI, and scalable data systems. Master's in Data Science from Italy with hands-on experience in AI engineering and cloud development from the Netherlands.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="profile.jpg" alt="Sara Hashemi" style="object-fit: cover;">
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Business Intelligence & GenAI Engineering Intern</h3>
+                    <p class="company">Crystalloids | Netherlands</p>
+                    <p class="date">Jul 2025 - Dec 2025</p>
+                    <ul>
+                        <li>Developed and deployed custom GenAI agents on Vertex AI with structured retrieval and multi-step reasoning</li>
+                        <li>Built Python microservices with Docker + Cloud Run for scalable LLM agent deployment</li>
+                        <li>Created dashboards in Looker Studio to monitor KPIs and operational performance</li>
+                        <li>Designed evaluation pipelines testing LLM outputs for consistency and factuality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Data Analytics Intern</h3>
+                    <p class="company">Digikala | Iran</p>
+                    <p class="date">Mar 2021 - Nov 2021</p>
+                    <ul>
+                        <li>Processed large-scale transactional data for operational and risk-related reporting</li>
+                        <li>Developed SQL transformations and Python pipelines for data validation</li>
+                        <li>Designed analytical models to detect sales anomalies and unusual patterns</li>
+                        <li>Built Power BI and Tableau dashboards tracking revenue and pricing trends</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Data Analyst</h3>
+                    <p class="company">Etelaat Newspaper | Iran</p>
+                    <p class="date">Sep 2016 - Dec 2016</p>
+                    <ul>
+                        <li>Analyzed campaign performance and identified irregular trends</li>
+                        <li>Created SQL queries for reporting pipelines</li>
+                        <li>Built foundational skills in data modeling and ETL logic</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Custom HR GenAI Agent</h3>
+                <p>Built an enterprise HR assistant using Vertex AI Agent Engine integrated with Confluence, Jira, and Google Calendar APIs. Implemented retrieval-first logic for reliability and data grounding.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Vertex AI</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Cloud Run</span>
+                    <span class="tech-tag">RAG</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Q&A Chatbot with RAG</h3>
+                <p>Developed retrieval-augmented chatbot combining classical TF-IDF and embedding-based semantic search. Fine-tuned response quality using LoRA with relevance and coherence metrics.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">NLP</span>
+                    <span class="tech-tag">LLM</span>
+                    <span class="tech-tag">LoRA</span>
+                    <span class="tech-tag">TF-IDF</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Pricing Optimization & Analytics</h3>
+                <p>Built pricing analysis dashboard with margin tracking, competitor benchmarks, and discount scenarios. Analyzed sales data to identify revenue trends and price sensitivity.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">SQL</span>
+                    <span class="tech-tag">Analytics</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>EMG Feature Selection (Genetic Algorithm)</h3>
+                <p>Applied Genetic Algorithms to select optimal features from EMG signal data. Trained RNN models for lower-limb motion classification, boosting model accuracy.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">PyTorch</span>
+                    <span class="tech-tag">RNN</span>
+                    <span class="tech-tag">ML</span>
+                    <span class="tech-tag">Signal Processing</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Retail Customer Clustering</h3>
+                <p>Applied K-Means, DBSCAN, and hierarchical clustering on customer transaction data. Identified high-value segments and outliers for targeted marketing strategies.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">scikit-learn</span>
+                    <span class="tech-tag">Clustering</span>
+                    <span class="tech-tag">PCA</span>
+                    <span class="tech-tag">Visualization</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-more">
+            <p>For a complete list of projects and full code implementations:</p>
+            <div class="platform-links">
+                <a href="https://github.com/seyedehsara" target="_blank" class="platform-link">
+                    <span>📂</span> View GitHub
+                </a>
+                <a href="https://www.kaggle.com/saraahashemii1998" target="_blank" class="platform-link">
+                    <span>📊</span> View Kaggle
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Skills & Technologies</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>💻 Programming & Data</h3>
+                <ul>
+                    <li>Python (pandas, NumPy, scikit-learn)</li>
+                    <li>SQL (BigQuery, PostgreSQL)</li>
+                    <li>R, Excel</li>
+                    <li>ETL/ELT Pipelines</li>
+                    <li>Data Modeling</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>🤖 AI & Machine Learning</h3>
+                <ul>
+                    <li>GenAI & LLM Engineering</li>
+                    <li>PyTorch, TensorFlow</li>
+                    <li>NLP & RAG Systems</li>
+                    <li>Prompt Engineering</li>
+                    <li>Model Evaluation</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>☁️ Cloud & Big Data</h3>
+                <ul>
+                    <li>Google Cloud Platform (GCP)</li>
+                    <li>Vertex AI & Cloud Run</li>
+                    <li>Databricks (PySpark, Delta)</li>
+                    <li>Docker & CI/CD</li>
+                    <li>Firebase</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>📊 BI & Visualization</h3>
+                <ul>
+                    <li>Looker Studio</li>
+                    <li>Power BI</li>
+                    <li>Tableau</li>
+                    <li>Streamlit</li>
+                    <li>Matplotlib, Seaborn</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>🎯 Data Engineering</h3>
+                <ul>
+                    <li>Batch Data Processing</li>
+                    <li>Data Validation</li>
+                    <li>Pipeline Optimization</li>
+                    <li>Analytical Modeling</li>
+                    <li>Data Quality</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>🌍 Languages & Soft Skills</h3>
+                <ul>
+                    <li>English (Fluent)</li>
+                    <li>Italian (Fluent)</li>
+                    <li>Analytical Thinking</li>
+                    <li>Stakeholder Collaboration</li>
+                    <li>Problem Solving</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <p>I'm open to opportunities in Data Engineering and AI Engineering. Let's connect and discuss how we can work together!</p>
+            
+            <div class="contact-info">
+                <p>📧 Email: <a href="mailto:saraa.hashemii@gmail.com">saraa.hashemii@gmail.com</a></p>
+                <p>📱 Phone: <a href="tel:+393347089055">+39 334 708 9055</a></p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/saraa-hashemii/" target="_blank" title="LinkedIn">in</a>
+                <a href="https://github.com/seyedehsara" target="_blank" title="GitHub">GH</a>
+                <a href="https://www.kaggle.com/saraahashemii1998" target="_blank" title="Kaggle">K</a>
+                <a href="mailto:saraa.hashemii@gmail.com" title="Email">✉</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Sara Hashemi. Built with passion for data and AI.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
